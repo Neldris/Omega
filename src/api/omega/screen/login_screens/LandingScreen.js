@@ -2,7 +2,7 @@
 import React, { Component } from 'react';
 import GenericLoginModel from '../../util/GenericLoginScreen';
 import {AsyncStorage} from 'react-native';
-
+import LoginScreen from './LoginScreen';
 import {
          ActivityIndicator,
        } from 'react-native';
@@ -23,7 +23,7 @@ export default class LandingScreen extends Component<{}> {
      * Check for pincode then react accordingly
      * */
     componentWillMount(){
-        this.initCheck();
+        //this.initCheck();
     }
     componentDidMount(){
 
@@ -65,11 +65,12 @@ export default class LandingScreen extends Component<{}> {
         }
     }
     render() {
+        let getNavParams = this.props.navigation.state.params;
+        if (getNavParams == null || getNavParams === 'undefined' ) {
+            return <LoginScreen/>
+        }
+        return <GenericLoginModel
+            model={<ActivityIndicator size="large" color="#f45"/>}/>
 
-        return (
-                <GenericLoginModel
-                    model = {<ActivityIndicator size="large" color="#f45"/>}
-                />
-        );
     }
 }

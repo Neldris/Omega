@@ -4,6 +4,7 @@ import styles from '../../../../../resources/style/App1StyleSheet'
 import GenericLoginModel from '../../util/GenericLoginScreen';
 import {AsyncStorage} from 'react-native';
 import  {connect} from 'react-redux';
+import {userLoginAction} from '../../actions/login_action/';
 
 import {
     TextInput,
@@ -42,11 +43,17 @@ export class  LoginScreenComponent extends Component<{}> {
                                                       });
     }
 
+    userLogin =() =>{
+         //this.props.navigation.navigate('LandingScreen');
+         this.props.userLoginAction('richard','ewrwer');
+        alert('here');
+    }
     /***
      *  Main Login Render Logic with views
      * @returns {XML}
      */
     render() {
+        console.log(this.props);
         return (
             <GenericLoginModel
               model={
@@ -69,7 +76,7 @@ export class  LoginScreenComponent extends Component<{}> {
 
                       <TouchableOpacity
                           style= {styles.log_m_btn}
-                          onPress ={this.loginIntent}  >
+                          onPress ={this.userLogin}  >
                           <Text style={styles.log_m_btn_text}> Continue</Text>
                       </TouchableOpacity>
 
@@ -100,7 +107,10 @@ export class  LoginScreenComponent extends Component<{}> {
  * @type {{}}
  */
 const mapDispatchToProps = {
-
+ userLoginAction,
 }
 
+/***
+ * The Connect for the LoginScreen
+ */
 export default LoginScreen = connect(mapStateToProps,mapDispatchToProps)(LoginScreenComponent);

@@ -2,10 +2,10 @@
  * Created by richard on 10/01/18.
  */
 import {combineReducers} from 'redux';
-import {LoginReducer} from './login_reducer';
+import {userLoginReducer} from './loginReducer';
 
 
 export default combineReducers({
-    LoginReducer
+    userLoginReducer
 });
 
