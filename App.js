@@ -4,15 +4,8 @@
  * @flow
  */
 
-import React, { Component } from 'react';
-import {
-  Platform,
-  StyleSheet,
-  Text,
-  View
-} from 'react-native';
-
-import ApplicationNavigation from './src/api/omega/navigation';
+import React, {Component} from 'react';
+import {ApplicationNavigation} from './src/api/omega/navigation';
 
 export default class App extends Component<{}> {
   render() {

@@ -9,9 +9,8 @@ import {
     View,
 } from 'react-native';
 
-const landingImage = require('../../../../resources/static/imgs/landing.png');
 
-export default class GenericLoginModel extends Component<{}> {
+export default class GenericLoginScreen extends Component<{}> {
 
     constructor(props){
         super(props);
@@ -19,6 +18,7 @@ export default class GenericLoginModel extends Component<{}> {
 
 
     render() {
+        const landingImage = require('../../../../resources/static/imgs/landing.png');
         return (
             <ImageBackground
                 source={landingImage}

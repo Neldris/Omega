@@ -1,8 +1,9 @@
 /*use strict*/
 import React, { Component } from 'react';
 import styles from '../../../../../resources/style/App1StyleSheet'
-import GenericLoginModel from '../../util/GenericLoginModel';
+import GenericLoginModel from '../../util/GenericLoginScreen';
 import {AsyncStorage} from 'react-native';
+import  {connect} from 'react-redux';
 
 import {
     TextInput,
@@ -12,7 +13,7 @@ import {
 } from 'react-native';
 
 
-export default class LoginModel extends Component<{}> {
+export class  LoginScreenComponent extends Component<{}> {
 
     constructor(props){
         super(props);
@@ -34,8 +35,7 @@ export default class LoginModel extends Component<{}> {
             'pinCode': this.state.pinCode, };
         AsyncStorage.setItem('USER',this.state.username);
         console.log(this.state.username+' -----');
-        //AsyncStorage.getItem('USER').then((u)=>{ alert(u)}).done();
-        this.props.navigation.navigate('LandingModel',{
+        this.props.navigation.navigate('LandingScreen',{
                                                         'username':this.state.username,
                                                         'password': this.state.password,
                                                         'pinCode': this.state.pinCode,
@@ -86,3 +86,21 @@ export default class LoginModel extends Component<{}> {
         );
     }
 }
+
+/***
+ * The state controller
+ * @param state
+ */
+ const mapStateToProps = (state) => ({
+     loginState: state,
+ });
+
+/**
+ * Dispatch action controller
+ * @type {{}}
+ */
+const mapDispatchToProps = {
+
+}
+
+export default LoginScreen = connect(mapStateToProps,mapDispatchToProps)(LoginScreenComponent);

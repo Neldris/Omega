@@ -11,7 +11,7 @@ import {
     TextInput,
 } from 'react-native';
 
-export default class App extends Component<{}> {
+export default class MainScreen extends Component<{}> {
     render() {
         return (
             <View style={styles.lan_m_container}>

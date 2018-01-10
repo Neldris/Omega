@@ -1,7 +1,6 @@
 /*use strict*/
 import React, { Component } from 'react';
-import GenericLoginModel from '../../util/GenericLoginModel';
-//import AsyncApp1Storage  from '../../storage/AsyncApp1Storage';
+import GenericLoginModel from '../../util/GenericLoginScreen';
 import {AsyncStorage} from 'react-native';
 
 import {
@@ -9,7 +8,7 @@ import {
        } from 'react-native';
 
 
-export default class LandingModel extends Component<{}> {
+export default class LandingScreen extends Component<{}> {
 
     constructor(props){
         super(props);
@@ -24,7 +23,7 @@ export default class LandingModel extends Component<{}> {
      * Check for pincode then react accordingly
      * */
     componentWillMount(){
-        //this.initCheck();
+        this.initCheck();
     }
     componentDidMount(){
 
@@ -54,11 +53,11 @@ export default class LandingModel extends Component<{}> {
                 /**Check for getNavParams integrity
                 */
                if (getNavParams == null || getNavParams === 'undefined' ) {
-                   this.props.navigation.navigate('LoginModel');
+                   this.props.navigation.navigate('LoginScreen');
                }else{
 
                    console.log('User 1'+getNavParams.username);
-                   this.props.navigation.navigate('PinCodeModel');
+                   this.props.navigation.navigate('PinCodeScreen');
                }
 
         }catch (error){

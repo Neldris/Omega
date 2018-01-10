@@ -3,19 +3,19 @@
  */
 
 import {StackNavigator} from 'react-navigation';
-import LandingModel from '../screen/login_screens/LandingModel';
-import LoginModel from '../screen/login_screens/LoginModel';
-import MainModel from '../screen/login_screens/MainModel';
-import PinCodeModel from '../screen/login_screens/PinCodeModel';
-import NewUserRegisterModel from '../screen/login_screens/NewUserRegisterModel';
+import LandingScreen from '../screen/login_screens/LandingScreen';
+import LoginScreen from '../screen/login_screens/LoginScreen';
+import MainScreen from '../screen/login_screens/MainScreen';
+import PinCodeScreen from '../screen/login_screens/PinCodeScreen';
+import NewUserRegisterScreen from '../screen/login_screens/NewUserRegisterScreen';
 
 export const ApplicationNavigation = StackNavigator(
     {
-        LandingModel: {screen: LandingModel},
-        LoginModel: {screen: LoginModel},
-        MainModel: {screen: MainModel},
-        PinCodeModel: {screen: PinCodeModel},
-        NewUserRegisterModel :{screen: NewUserRegisterModel},
+        LandingScreen: {screen: LandingScreen},
+        LoginScreen: {screen: LoginScreen},
+        MainScreen: {screen: MainScreen},
+        PinCodeScreen: {screen: PinCodeScreen},
+        NewUserRegisterScreen :{screen: NewUserRegisterScreen},
 
     },
     {
