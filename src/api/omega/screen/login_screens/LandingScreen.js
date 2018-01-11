@@ -66,7 +66,8 @@ export default class LandingScreen extends Component<{}> {
     }
     render() {
         let getNavParams = this.props.navigation.state.params;
-        if (getNavParams == null || getNavParams === 'undefined' ) {
+        
+        if (!this.props.loginState) {
             return <LoginScreen/>
         }
         return <GenericLoginModel

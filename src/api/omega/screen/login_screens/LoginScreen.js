@@ -4,7 +4,9 @@ import styles from '../../../../../resources/style/App1StyleSheet'
 import GenericLoginModel from '../../util/GenericLoginScreen';
 import {AsyncStorage} from 'react-native';
 import  {connect} from 'react-redux';
-import {userLoginAction} from '../../actions/login_action/';
+import {userLoginAction,
+         bling,
+         loginNavigationAction} from '../../actions/login_action/';
 
 import {
     TextInput,
@@ -44,8 +46,8 @@ export class  LoginScreenComponent extends Component<{}> {
     }
 
     userLogin =() =>{
-         //this.props.navigation.navigate('LandingScreen');
          this.props.userLoginAction('richard','ewrwer');
+         //this.props.navigation.dispatch('LandingScreen');
         alert('here');
     }
     /***
@@ -54,6 +56,8 @@ export class  LoginScreenComponent extends Component<{}> {
      */
     render() {
         console.log(this.props);
+        console.log('password: '+this.props.loginState.isLoading);
+        console.log(this.props.ham.hammer );
         return (
             <GenericLoginModel
               model={
@@ -80,12 +84,12 @@ export class  LoginScreenComponent extends Component<{}> {
                           <Text style={styles.log_m_btn_text}> Continue</Text>
                       </TouchableOpacity>
 
-                      <TouchableOpacity style={styles.log_m_reset_con}>
+                      <TouchableOpacity style={styles.log_m_reset_con} onPress={()=>this.props.bling(true)}>
                           <Text style={styles.log_m_reset_text}>Reset password</Text>
                       </TouchableOpacity>
 
-                      <TouchableOpacity style={styles.log_m_reg_con}>
-                          <Text style={styles.log_m_reg_text}>Register a new account</Text>
+                      <TouchableOpacity style={styles.log_m_reg_con} onPress={()=>this.props.loginNavigationAction('LandingScreen')} >
+                          <Text style={styles.log_m_reg_text}>Register a new account {this.props.loginState.data.username}</Text>
                       </TouchableOpacity>
                   </View>
               }
@@ -99,7 +103,9 @@ export class  LoginScreenComponent extends Component<{}> {
  * @param state
  */
  const mapStateToProps = (state) => ({
-     loginState: state,
+     loginState: state.userLoginReducer,
+     ham: state.hamm,
+     nav: state.initialNavigationStateReducer,
  });
 
 /**
@@ -108,6 +114,8 @@ export class  LoginScreenComponent extends Component<{}> {
  */
 const mapDispatchToProps = {
  userLoginAction,
+ bling,
+ loginNavigationAction,
 }
 
 /***
