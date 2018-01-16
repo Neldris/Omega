@@ -14,36 +14,14 @@ import LAC from './login_action_constants';
 
 
 /***
- *  userLogin
+ * userLoginAction, WHERE LOGIN HAPPENS
  * @param username
  * @param password
  * @returns {function(*)}
  */
-export function userLoginAction(username,password) {
-    return (dispatch) =>{
-        let data ={username:username,password:password};
-       dispatch({type:LAC.USER_LOGIN, data});
-    }
-}
-
-
-export function loginNavigationAction(screen:string){
-             return(dispatch)=>{
-                 dispatch({type:'LOG_NAV',screen});
-             }
-}
-
-export function bling(hammer:boolean){
-
-    return(dispatch)=>{
-        setInterval(()=>{
-            if(hammer) {
-                dispatch({type: 'TM', hammer: hammer});
-                hammer = !hammer;
-            }else{
-                dispatch({type: 'TM', hammer: hammer});
-                hammer = !hammer;
-            }
-        },1000);
+export function userLoginAction(username: string, password: string) {
+    return (dispatch) => {
+        let data = {username: username, password: password};
+        dispatch({type: LAC.USER_LOGIN, data});
     }
 }

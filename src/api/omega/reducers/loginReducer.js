@@ -8,23 +8,13 @@ import LAC from '../actions/login_action/login_action_constants';
  * LOGIN REDUCER STATE SIGNATURE
  * @type {{data: Array, isLoading: boolean, isRegistered: boolean}}
  */
-let dataState = {data:{},isLoading:true,isRegistered:false};
+let dataState = {data: {}, isLoading: true, isRegistered: false};
 
-export function userLoginReducer(state= dataState, action) {
-    switch (action.type){
+export function userLoginReducer(state = dataState, action) {
+    switch (action.type) {
 
         case LAC.USER_LOGIN:
-            state = Object.assign({},state,{data:action.data, isLoading:false, isRegistered:true});
-            return state;
-        default:
-            return state;
-    }
-}
-
-export function hamm(state={},action){
-    switch (action.type){
-        case 'TM':
-            state = Object.assign({},state,{hammer:action.hammer});
+            state = Object.assign({}, state, {data: action.data, isLoading: false, isRegistered: true});
             return state;
         default:
             return state;

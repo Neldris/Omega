@@ -1,20 +1,18 @@
 /*use strict*/
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import GenericLoginModel from '../../util/GenericLoginScreen';
-import {AsyncStorage} from 'react-native';
 import LoginScreen from './LoginScreen';
+import  {connect} from 'react-redux';
 import {
-         ActivityIndicator,
-       } from 'react-native';
+    ActivityIndicator,
+    AsyncStorage
+} from 'react-native';
 
 
-export default class LandingScreen extends Component<{}> {
+export class LandingScreen extends Component<{}> {
 
-    constructor(props){
+    constructor(props) {
         super(props);
-        this.state={
-            username:''
-        }
     }
 
     /**
@@ -22,10 +20,11 @@ export default class LandingScreen extends Component<{}> {
      * Basicaly, We check to see if User object is set,
      * Check for pincode then react accordingly
      * */
-    componentWillMount(){
-        //this.initCheck();
+    componentWillMount() {
+        this.initAuthentication();
     }
-    componentDidMount(){
+
+    componentDidMount() {
 
     }
 
@@ -34,7 +33,7 @@ export default class LandingScreen extends Component<{}> {
      * @param username
      * @param password
      */
-    authLogin(username,password){
+    authLogin(username, password) {
 
     }
 
@@ -42,36 +41,32 @@ export default class LandingScreen extends Component<{}> {
      * Void initChech to initialise
      * Logins
      */
-    async initCheck(){
+    async initAuthentication() {
         try {
-               const getNavParams = this.props.navigation.state.params;
-               AsyncStorage.getItem('USER').then((user)=>{
-                   this.setState({username:user});
-               }).done();
-               console.log('User >><<'+this.state.username);
 
-                /**Check for getNavParams integrity
-                */
-               if (getNavParams == null || getNavParams === 'undefined' ) {
-                   this.props.navigation.navigate('LoginScreen');
-               }else{
+            let asn = AsyncStorage.getItem('USER');
 
-                   console.log('User 1'+getNavParams.username);
-                   this.props.navigation.navigate('PinCodeScreen');
-               }
+            if (!this.props.loginState.data.password) {
+                this.props.navigation.navigate('LoginScreen');
+            } else {
+                this.props.navigation.navigate('PinCodeScreen');
+            }
 
-        }catch (error){
-            console.log('Error');
+        } catch (error) {
+            console.log(error);
         }
     }
+
     render() {
-        let getNavParams = this.props.navigation.state.params;
-        
-        if (!this.props.loginState) {
-            return <LoginScreen/>
-        }
+
         return <GenericLoginModel
             model={<ActivityIndicator size="large" color="#f45"/>}/>
 
     }
 }
+
+const mapStateToProps = (state) => ({
+    loginState: state.userLoginReducer,
+});
+
+export default connect(mapStateToProps)(LandingScreen);
