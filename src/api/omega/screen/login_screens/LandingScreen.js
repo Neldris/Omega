@@ -4,9 +4,11 @@ import GenericLoginModel from '../../util/GenericLoginScreen';
 import LoginScreen from './LoginScreen';
 import  {connect} from 'react-redux';
 import {
-    ActivityIndicator,
-    AsyncStorage
-} from 'react-native';
+        ActivityIndicator,
+        } from 'react-native';
+
+
+import {userAuthCheck} from '../../actions/login_action';
 
 
 export class LandingScreen extends Component<{}> {
@@ -21,11 +23,13 @@ export class LandingScreen extends Component<{}> {
      * Check for pincode then react accordingly
      * */
     componentWillMount() {
-        this.initAuthentication();
+        this.props.userAuthCheck();
+
+
     }
 
     componentDidMount() {
-
+        this.initAuthentication();
     }
 
     /**
@@ -33,40 +37,46 @@ export class LandingScreen extends Component<{}> {
      * @param username
      * @param password
      */
-    authLogin(username, password) {
+    authenticationCheck() {
 
     }
 
     /**
-     * Void initChech to initialise
+     * Void initAuthentication to initialise
      * Logins
      */
     async initAuthentication() {
         try {
-
-            let asn = AsyncStorage.getItem('USER');
-
-            if (!this.props.loginState.data.password) {
-                this.props.navigation.navigate('LoginScreen');
-            } else {
-                this.props.navigation.navigate('PinCodeScreen');
-            }
-
+                console.log('Loading -->>: '+ this.props.isLoading);
+                if(this.props.isLoading) {
+                    if (!this.props.loginState.data.password) {
+                        this.props.navigation.navigate('LoginScreen');
+                    } else {
+                        this.props.navigation.navigate('PinCodeScreen');
+                    }
+                }
         } catch (error) {
             console.log(error);
         }
     }
 
     render() {
-
-        return <GenericLoginModel
-            model={<ActivityIndicator size="large" color="#f45"/>}/>
-
+        console.log('Loading render: '+ this.props.isLoading);
+        if(this.props.isLoading) {
+            return <GenericLoginModel
+                model={<ActivityIndicator size="large" color="#f45"/>}/>
+        }
+        return <LoginScreen/>;
     }
 }
 
 const mapStateToProps = (state) => ({
     loginState: state.userLoginReducer,
+    isLoading: state.isLoading,
 });
 
-export default connect(mapStateToProps)(LandingScreen);
+const mapActionToProps ={
+    userAuthCheck,
+}
+
+export default connect(mapStateToProps,mapActionToProps)(LandingScreen);

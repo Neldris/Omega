@@ -47,7 +47,7 @@ export class LoginScreen extends Component<{}> {
                             underlineColorAndroid={'transparent'}
                             style={styles.log_m_username}
                             placeholder={'username'}
-                            defaultValue={this.props.loginState.data.username}
+                            defaultValue={JSON.stringify(this.props.loginState.data)}
                             onChangeText={(value) =>alert(value)}
                         />
                         <TextInput
@@ -55,7 +55,7 @@ export class LoginScreen extends Component<{}> {
                             style={styles.log_m_password}
                             placeholder={'password'}
                             secureTextEntry={true}
-                            defaultValue={this.props.loginState.data.password}
+                            defaultValue={JSON.stringify(this.props.loginState.data)}
                             onChangeText={(value) => alert(value)}
                         />
 
@@ -72,7 +72,7 @@ export class LoginScreen extends Component<{}> {
                         <TouchableOpacity style={styles.log_m_reg_con}
                                           onPress={() => this.userLogin}>
                             <Text style={styles.log_m_reg_text}>Register a new
-                                account {this.props.loginState.data.username}</Text>
+                                account {JSON.stringify(this.props.loginState.data)}</Text>
                         </TouchableOpacity>
                     </View>
                 }
