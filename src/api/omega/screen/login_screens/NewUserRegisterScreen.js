@@ -17,6 +17,7 @@ export default class NewUserRegisterScreen extends Component{
     render(){
         return(
             <GenericLoginScreen
+                topView={<Text>Hello world \n gohome</Text>}
                 model ={
                     <Text> New Register</Text>
                 }

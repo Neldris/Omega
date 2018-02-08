@@ -1,21 +1,28 @@
 /*use strict*/
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import GenericLoginModel from '../../util/GenericLoginScreen';
 import LoginScreen from './LoginScreen';
-import  {connect} from 'react-redux';
+import { connect } from 'react-redux';
+
 import {
-        ActivityIndicator,
-        } from 'react-native';
+    AsyncStorage,
+    ActivityIndicator,
+} from 'react-native';
 
+import NewUserRegisterScreen from "./NewUserRegisterScreen";
+import MainScreen from "./MainScreen";
+import PinCodeScreen from "./PinCodeScreen";
 
-import {userAuthCheck} from '../../actions/login_action';
+import {
+    userPassAuthCheck,
+    userLoginAction,
+    globalAuthCollector,
+    startUp,
+    userUsername,
+    userPassword,
+} from '../../actions/login_action';
 
-
-export class LandingScreen extends Component<{}> {
-
-    constructor(props) {
-        super(props);
-    }
+export class LandingScreen extends Component {
 
     /**
      * The Basic Control Structure that serve as a dispatch to a screen
@@ -23,60 +30,98 @@ export class LandingScreen extends Component<{}> {
      * Check for pincode then react accordingly
      * */
     componentWillMount() {
-        this.props.userAuthCheck();
-
-
+        this.props.startUp();
     }
 
-    componentDidMount() {
-        this.initAuthentication();
-    }
+    funcContinue = (usr) => {
+        this.props.userPassAuthCheck(
+            usr.uname,
+            usr.pass
+        );
 
-    /**
-     *  authLogin
-     * @param username
-     * @param password
+        console.log('results: >>[' + JSON.stringify(usr));
+    };
+
+    managePincode = (pin) => {
+        let p = this.state.pincode + pin;
+        this.setSate({ pincode: p });
+    };
+
+    /***
+     *
+     * @returns {XML}
      */
-    authenticationCheck() {
-
-    }
-
-    /**
-     * Void initAuthentication to initialise
-     * Logins
-     */
-    async initAuthentication() {
-        try {
-                console.log('Loading -->>: '+ this.props.isLoading);
-                if(this.props.isLoading) {
-                    if (!this.props.loginState.data.password) {
-                        this.props.navigation.navigate('LoginScreen');
-                    } else {
-                        this.props.navigation.navigate('PinCodeScreen');
-                    }
-                }
-        } catch (error) {
-            console.log(error);
-        }
-    }
-
     render() {
-        console.log('Loading render: '+ this.props.isLoading);
-        if(this.props.isLoading) {
-            return <GenericLoginModel
-                model={<ActivityIndicator size="large" color="#f45"/>}/>
+
+        if (!this.props.loginState.username === undefined) {
+            console.log('inside render: ' + this.props.loginState.username);
         }
-        return <LoginScreen/>;
+
+        console.log('Pincode dump: ' + JSON.stringify(this.props.loginState.username));
+
+        if (this.props.loginState.isLoading) {
+            return <GenericLoginModel
+                model={<ActivityIndicator size="large" color="#f45" />} />;
+        } else {
+
+            /***
+             * -if isRegistered and isPincodeVerified
+             *      Show MainScreen
+             *
+             * - else if isRegistered and not isPincodeVerified
+             *      Show PinCodeScree
+             * - else
+             *     -if isNewReg
+             *       Show  NewUserRegisterScreen
+             *     -else
+             *        Show LoginScreen
+             */
+            if (this.props.loginState.isRegistered &&
+                this.props.loginState.isPincodeVerified) {
+
+                return <MainScreen />;
+
+            } else if (this.props.loginState.isRegistered &&
+                !this.props.loginState.isPincodeVerified) {
+
+                return <PinCodeScreen
+                    managePincode={(pin) => this.managePincode(pin)}
+                />;
+
+            } else {
+                if (this.props.loginState.isNewReg) {
+
+                    return <NewUserRegisterScreen />;
+
+                } else {
+
+                    return <LoginScreen
+                        uname={(val) => this.props.userUsername(val)}
+                        pass={(val) => this.props.userPassword( val)}
+                        funcContinue={() => this.props.userPassAuthCheck(this.props.loginState.username, 
+                                                                         this.props.loginState.password)}
+                        funcNewRegister={() => alert('New register')}
+                        funcResetPassword={() => alert('Password Reset')}
+                    />;
+                }
+            }
+        }
+
     }
 }
 
 const mapStateToProps = (state) => ({
     loginState: state.userLoginReducer,
-    isLoading: state.isLoading,
+    //isLoading: state.isLoading,
 });
 
-const mapActionToProps ={
-    userAuthCheck,
+const mapActionToProps = {
+    userPassAuthCheck,
+    userLoginAction,
+    globalAuthCollector,
+    startUp,
+    userUsername,
+    userPassword,
 }
 
-export default connect(mapStateToProps,mapActionToProps)(LandingScreen);
+export default connect(mapStateToProps, mapActionToProps)(LandingScreen);

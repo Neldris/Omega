@@ -28,8 +28,8 @@ const styles = StyleSheet.create({
     lan_m_container:{
       flex: 1,
       backgroundColor: '#d3f',
-      alignContent:'center',
-      alignItems: 'center',
+      flexDirection: 'column',
+      justifyContent: 'space-between',
     },
 
     /** Landing Image cover */
@@ -42,15 +42,60 @@ const styles = StyleSheet.create({
     },
     lan_m_operator:{
         zIndex:10,
-        flex:1,
+        flex: 2,
         paddingLeft:50,
         paddingRight:50,
-        justifyContent: 'center',
         alignItems: 'center',
         alignSelf:'stretch',
     },
+    /**
+     * Top container
+     * */
+    lan_m_topView:{
+        flex:1,
+        flexDirection:'column',
+        justifyContent:'space-between',
+        alignSelf:'stretch',
+        alignContent:'center',
+        alignItems:'center',
+        marginTop: 20,
+        marginLeft: 40,
+        marginRight: 40,
+        marginBottom:20,
+        //backgroundColor:'rgba(255,255,255,0.5)',
+    },
 
+    /** Top Application view Inner box
+     * that contains the appIcon,App text,
+     * */
+    lan_m_tv_box:{
+        flex:1,
+        alignSelf:'stretch',
+        alignContent:'center',
+        alignItems:'center',
+    },
+    /** Application Logo Icon*/
+    lan_m_tv_img:{
+        width:80,
+        height:80,
+        alignContent:'center'
+    },
 
+    /** Application Name text*/
+    lan_m_app_txt:{
+      fontSize:20,
+      color:'#fff',
+      fontWeight:'bold',
+    },
+
+    /***
+     *
+     */
+    lan_m_pageTxt:{
+     fontSize:24,
+      fontWeight:'bold',
+      color:'#fff',
+    },
     /** Keyboard View to wrap username,passord,button, register inputs*/
     /** LoginModel Stylesheet*/
 
@@ -58,6 +103,7 @@ const styles = StyleSheet.create({
     log_m_container:{
       alignSelf: 'stretch',
       flexDirection: 'column',
+      justifyContent:'space-between',
     },
     /** Landing Password */
     log_m_username:{
@@ -72,7 +118,7 @@ const styles = StyleSheet.create({
         padding: 20,
         alignSelf: 'stretch',
         backgroundColor:'rgba(255, 255, 255, 0.5)',
-        marginBottom:30,
+        marginBottom:10,
         fontSize: 20,
     },
     /** Login Button*/
@@ -82,6 +128,7 @@ const styles = StyleSheet.create({
         backgroundColor:'green',
         justifyContent: 'center',
         alignItems: 'center',
+        marginBottom: 10,
     },
 
     /** Login btn text*/
@@ -92,7 +139,6 @@ const styles = StyleSheet.create({
     /** Login Reset view*/
     log_m_reset_con:{
         marginBottom: 50,
-        marginTop: 10,
         alignItems: 'flex-end',
     },
 
@@ -118,6 +164,16 @@ const styles = StyleSheet.create({
         paddingRight: 10,
     },
 
+    /** PINCODE SCREEN STYLES*/
+    log_m_pin_pincode:{
+        height:50,
+        width:50,
+        padding:5,
+        backgroundColor: 'rgba(255, 255, 255, 0.5)',
+        margin: 10,
+        textAlign: 'center',
+        fontSize:26,
+    }
 
 });
 
