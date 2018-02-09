@@ -22,7 +22,7 @@ import {
 import PropTypes from "prop-types";
 
 
-export class LoginScreen extends Component<{}> {
+export class LoginScreen extends Component {
 
     constructor(props) {
         super(props);
@@ -94,7 +94,7 @@ export class LoginScreen extends Component<{}> {
 
 /***
  *
- * @type {
+ * @type 
  * {funcUsername: (*),
  * funcPassword: (*),
  * funcContinue: (*),

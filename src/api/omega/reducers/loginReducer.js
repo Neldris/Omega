@@ -11,7 +11,7 @@ import LAC from '../actions/login_action/login_action_constants';
 let dataState = {};
 
 export function userLoginReducer(state = dataState, action) {
-    console.log('action type: '+ action.type);
+   // console.log('action type: '+ action.type);
     switch (action.type) {
 
         case LAC.USER_LOGIN:

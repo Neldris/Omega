@@ -98,7 +98,8 @@ export function globalAuthCollector(username, password, pincode) {
 
 const saveMe = async (val) => {
     try {
-        await AsyncStorage.setItem('login', JSON.stringify(val));
+        await AsyncStorage.setItem('login', JSON.stringify(val),()=>console.log('new Data saved...')).done();
+        console.log('Storage: '+JSON.stringify(val));
     } catch (error) {
         console.log('Save Error ' + error.val);
     }
@@ -118,18 +119,17 @@ console.log('Inside UserPassAuthcCheck '+username+' '+password);
         dispatch({
             type: LAC.USER_ISLOADING,
             isLoading: true,
-            isRegistered: true
         });
         saveMe({
             username: username,
             password: password
         });
         setTimeout(() => {
+            
             /***
              * TODO make a fetch call to the server to validate
              * the user provided credentials.
              */
-            //let data = {username: username, password:password};
             dispatch({
                 type: LAC.USER_USERNAME,
                 username: username
@@ -142,8 +142,12 @@ console.log('Inside UserPassAuthcCheck '+username+' '+password);
                 type: LAC.USER_ISLOADING,
                 isLoading: false
             });
+            dispatch({
+                type: LAC.USER_ISREGISTERED,
+                isRegistered: false
+            });
 
-        }, 2000);
+        }, 100);
     }
 }
 
@@ -154,7 +158,8 @@ export const startUp = () => {
             AsyncStorage.getItem('login').then((value) => {
                 let val = JSON.parse(value);
                 dispatch(userPassAuthCheck(val.username, val.password)); 
-            }); 
+                return value;
+            }).then((v)=>console.log('payload retrieved...'+v)).done();
         }catch(error){
             console.log('====================================');
             console.log('startUp error: '+error.message);
@@ -162,3 +167,8 @@ export const startUp = () => {
         }  
     }
 }
+
+export const isNewReg = (payload) => ({
+    type: LAC.USER_ISNEWREG,
+    isNewReg:payload
+})
