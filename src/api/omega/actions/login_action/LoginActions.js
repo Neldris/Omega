@@ -23,14 +23,26 @@ import {
  */
 export function userLoginAction(username, password) {
     return (dispatch) => {
-        let data = {
-            username: username,
-            password: password
-        };
-        dispatch({
-            type: LAC.USER_LOGIN,
-            data
-        });
+        return fetch('http://10.0.100.62:10020/biotec-api/login',{
+            method:GET,
+            headers:{
+                Accept: 'application/json',
+                'Content-TYpe': 'application/json',
+            },
+            body:{
+                username:'administrator',
+                password:'fisherDEMO1'
+            }
+        }).then((reponse)=> Response.data).
+        then(data =>{
+            alert(data);
+                dispatch({
+                            type: LAC.USER_LOGIN,
+                            username: data.username,
+                           // password: password
+                        });
+        }).done();
+       
     }
 }
 
@@ -114,7 +126,7 @@ const saveMe = async (val) => {
  */
 export function userPassAuthCheck(username, password) {
 console.log('Inside UserPassAuthcCheck '+username+' '+password);
-
+   userLoginAction(username,password);
     return (dispatch) => {
         dispatch({
             type: LAC.USER_ISLOADING,
@@ -144,7 +156,7 @@ console.log('Inside UserPassAuthcCheck '+username+' '+password);
             });
             dispatch({
                 type: LAC.USER_ISREGISTERED,
-                isRegistered: false
+                isRegistered: true
             });
 
         }, 100);
@@ -158,7 +170,6 @@ export const startUp = () => {
             AsyncStorage.getItem('login').then((value) => {
                 let val = JSON.parse(value);
                 dispatch(userPassAuthCheck(val.username, val.password)); 
-                return value;
             }).then((v)=>console.log('payload retrieved...'+v)).done();
         }catch(error){
             console.log('====================================');
