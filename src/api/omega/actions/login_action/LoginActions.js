@@ -3,6 +3,9 @@
  */
 import LAC from './login_action_constants';
 import {
+    appUri
+} from './../../../../../resources/config/Uri';
+import {
     AsyncStorage
 } from 'react-native';
 /***
@@ -23,26 +26,26 @@ import {
  */
 export function userLoginAction(username, password) {
     return (dispatch) => {
-        return fetch('http://10.0.100.62:10020/biotec-api/login',{
-            method:GET,
-            headers:{
-                Accept: 'application/json',
-                'Content-TYpe': 'application/json',
-            },
-            body:{
-                username:'administrator',
-                password:'fisherDEMO1'
+        return fetch(`${appUri}?username=${username}&password=${password}`)
+            .then(response => response._bodyInit)
+            .then(val => {
+              try{
+                 let payload = JSON.parse(val);
+                if (payload.success) {
+                    console.log(val);
+                    dispatch({
+                        type: 'DATA',
+                        data: payload,
+                    });
+                }
+            }catch(error){
+                console.log('Payload Error: '+error.message);
             }
-        }).then((reponse)=> Response.data).
-        then(data =>{
-            alert(data);
-                dispatch({
-                            type: LAC.USER_LOGIN,
-                            username: data.username,
-                           // password: password
-                        });
-        }).done();
-       
+            }).catch((error) => {
+                console.log('ERROR: ' + error);
+
+            }).done();
+
     }
 }
 
@@ -110,8 +113,8 @@ export function globalAuthCollector(username, password, pincode) {
 
 const saveMe = async (val) => {
     try {
-        await AsyncStorage.setItem('login', JSON.stringify(val),()=>console.log('new Data saved...')).done();
-        console.log('Storage: '+JSON.stringify(val));
+        await AsyncStorage.setItem('login', JSON.stringify(val), () => console.log('new Data saved...')).done();
+        console.log('Storage: ' + JSON.stringify(val));
     } catch (error) {
         console.log('Save Error ' + error.val);
     }
@@ -125,8 +128,8 @@ const saveMe = async (val) => {
  * @returns {function(*)}
  */
 export function userPassAuthCheck(username, password) {
-console.log('Inside UserPassAuthcCheck '+username+' '+password);
-   userLoginAction(username,password);
+    console.log('Inside UserPassAuthcCheck ' + username + ' ' + password);
+    userLoginAction(username, password);
     return (dispatch) => {
         dispatch({
             type: LAC.USER_ISLOADING,
@@ -137,7 +140,7 @@ console.log('Inside UserPassAuthcCheck '+username+' '+password);
             password: password
         });
         setTimeout(() => {
-            
+
             /***
              * TODO make a fetch call to the server to validate
              * the user provided credentials.
@@ -156,7 +159,7 @@ console.log('Inside UserPassAuthcCheck '+username+' '+password);
             });
             dispatch({
                 type: LAC.USER_ISREGISTERED,
-                isRegistered: true
+                isRegistered: false
             });
 
         }, 100);
@@ -164,22 +167,22 @@ console.log('Inside UserPassAuthcCheck '+username+' '+password);
 }
 
 export const startUp = () => {
-   
+
     return dispatch => {
-        try{    
+        try {
             AsyncStorage.getItem('login').then((value) => {
                 let val = JSON.parse(value);
-                dispatch(userPassAuthCheck(val.username, val.password)); 
-            }).then((v)=>console.log('payload retrieved...'+v)).done();
-        }catch(error){
+                dispatch(userPassAuthCheck(val.username, val.password));
+            }).then((v) => console.log('payload retrieved...' + v)).done();
+        } catch (error) {
             console.log('====================================');
-            console.log('startUp error: '+error.message);
+            console.log('startUp error: ' + error.message);
             console.log('====================================');
-        }  
+        }
     }
 }
 
 export const isNewReg = (payload) => ({
     type: LAC.USER_ISNEWREG,
-    isNewReg:payload
+    isNewReg: payload
 })

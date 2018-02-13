@@ -55,7 +55,9 @@ export function userLoginReducer(state = dataState, action) {
                 isNewReg: action.isNewReg,
             });
             return state;
-
+        case 'DATA':
+           state = Object.assign({}, state,{data: action.data});
+           return state;    
         default:
             return state;
     }

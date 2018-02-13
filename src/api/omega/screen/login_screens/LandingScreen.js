@@ -40,13 +40,18 @@ export class LandingScreen extends Component {
                  isRegistered,
                  isLoading,
                  isNewReg,
-                 isPincodeVerified} = this.props.loginState;
+                 isPincodeVerified,
+                 data} = this.props.loginState;
                  
-        if (username !== '') {
+        if (!username === undefined) {
             console.log('inside render: ' + username);
         }
-
-        console.log('Pincode dump: ' + JSON.stringify(this.props.loginState));
+         
+             if(data){
+                    console.log('-------------------------'+data);
+                   // let hhh = JSON.parse(data);
+                    console.log(data.data)
+                }
 
         if (isLoading) {
             return <GenericLoginModel
@@ -85,7 +90,7 @@ export class LandingScreen extends Component {
                     return <LoginScreen
                         uname={(val) => this.props.userUsername(val)}
                         pass={(val) => this.props.userPassword( val)}
-                        funcContinue={() => this.props.userPassAuthCheck(username,password)}
+                        funcContinue={() => this.props.userLoginAction(username,password)}
                         funcNewRegister={() => this.props.isNewReg(true)}
                         funcResetPassword={() => alert('Password Reset')}
                     />;

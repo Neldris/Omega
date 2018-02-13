@@ -1,0 +1,1 @@
+export const appUri = "http://10.0.100.62:10020/biotec-api/login"
