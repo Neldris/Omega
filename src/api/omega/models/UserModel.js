@@ -1,6 +1,6 @@
 /**
  * User class to manage user's state
- * 
+ * @type class
  */
 export default class UserModel {
 
@@ -17,7 +17,7 @@ export default class UserModel {
         this.isDeleted = false /**type[boolean] */ ;
     }
    
-    setUid=(/**type[number]*/uid )=>{this.uid = uid;}
+    setUid=(uid /**type[number]*/)=>{this.uid = uid;}
     getUid=()=>{return this.uid;}
     
     setUsername=(username /**type[string] */)=>{this.username=username;}

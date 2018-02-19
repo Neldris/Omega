@@ -24,9 +24,10 @@ import {
  * @param password
  * @returns {function(*)}
  */
-export function userLoginAction(username, password) {
+export function userLoginAction(user) {
+    console.log(JSON.stringify(user));
     return (dispatch) => {
-        return fetch(`${appUri}?username=${username}&password=${password}`)
+        return fetch(`${appUri}?username=${user.getUsername()}&password=${user.getPassword()}`)
             .then(response => response._bodyInit)
             .then(val => {
               try{
@@ -36,6 +37,10 @@ export function userLoginAction(username, password) {
                     dispatch({
                         type: 'DATA',
                         data: payload,
+                    });
+                    dispatch({
+                        type: LAC.USER_ISREGISTERED,
+                        isRegistered: true
                     });
                 }
             }catch(error){

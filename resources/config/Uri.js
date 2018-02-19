@@ -1,1 +1,1 @@
-export const appUri = "http://10.0.100.62:10020/biotec-api/login"
+export const appUri = "https://webflow.pciservices.com/biotec-api/login"
